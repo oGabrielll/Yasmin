@@ -18,51 +18,70 @@
     }
 
     body {
-      height: 100vh;
-      overflow: hidden;
-      font-family: 'Inter', system-ui, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      background: black;
-    }
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: radial-gradient(circle at bottom, #02030f, #000 70%);
+}
 
-    /* FUNDO AURORA */
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      inset: -50%;
-      background: radial-gradient(
-        ellipse at center,
-        rgba(0, 255, 200, 0.25),
-        rgba(120, 0, 255, 0.25),
-        rgba(255, 0, 120, 0.15),
-        transparent 60%
-      );
-      animation: aurora 18s ease-in-out infinite alternate;
-      z-index: -2;
-    }
+/* AURORA REALISTA */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  background:
+    linear-gradient(
+      120deg,
+      rgba(0, 255, 200, 0.35),
+      rgba(0, 120, 255, 0.35),
+      rgba(180, 0, 255, 0.25),
+      rgba(0, 255, 180, 0.35)
+    );
+  filter: blur(80px);
+  animation: auroraMove 25s ease-in-out infinite alternate;
+  z-index: -2;
+}
 
-    body::after {
-      animation-duration: 28s;
-      filter: blur(60px);
-      opacity: 0.8;
-    }
+body::after {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 255, 200, 0.25) 0px,
+      rgba(0, 255, 200, 0.05) 60px,
+      rgba(0, 120, 255, 0.25) 120px,
+      rgba(180, 0, 255, 0.15) 180px
+    );
+  mix-blend-mode: screen;
+  filter: blur(60px);
+  animation: auroraWave 18s ease-in-out infinite alternate;
+  z-index: -1;
+}
 
-    @keyframes aurora {
-      0% {
-        transform: translate(-20%, -10%) rotate(0deg);
-      }
-      50% {
-        transform: translate(10%, 20%) rotate(120deg);
-      }
-      100% {
-        transform: translate(-10%, -20%) rotate(240deg);
-      }
-    }
+@keyframes auroraMove {
+  0% {
+    transform: translate(-10%, -10%) rotate(0deg);
+  }
+  100% {
+    transform: translate(10%, 10%) rotate(20deg);
+  }
+}
 
+@keyframes auroraWave {
+  0% {
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateX(10%);
+  }
+}
     /* TELA INICIAL */
     .start-screen {
       display: flex;
