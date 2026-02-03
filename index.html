@@ -25,7 +25,7 @@
     }
 
     h1 {
-      font-size: clamp(3rem, 8vw, 6rem); /* ajustado */
+      font-size: clamp(3rem, 8vw, 6rem);
       font-weight: 900;
       letter-spacing: 0.22em;
       text-transform: uppercase;
@@ -39,14 +39,14 @@
 
     @keyframes glow {
       0% { transform: scale(1); }
-      50% { transform: scale(1.025); }
+      50% { transform: scale(1.02); }
       100% { transform: scale(1); }
     }
 
     .heart {
       position: absolute;
-      bottom: -30px;
-      color: rgba(255, 0, 100, 0.8);
+      bottom: -40px;
+      color: rgba(255, 0, 120, 0.85);
       animation: floatUp linear infinite;
       pointer-events: none;
     }
@@ -57,7 +57,7 @@
         opacity: 1;
       }
       to {
-        transform: translateY(-120vh) scale(1.5);
+        transform: translateY(-120vh) scale(1.4);
         opacity: 0;
       }
     }
@@ -74,8 +74,16 @@
       heart.textContent = "❤️";
 
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (Math.random() * 22 + 16) + "px";
-      heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+      heart.style.fontSize = (Math.random() * 18 + 14) + "px";
+      heart.style.animationDuration = (Math.random() * 4 + 6) + "s";
 
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7
+
+      setTimeout(() => heart.remove(), 9000);
+    }
+
+    // poucos corações, subindo devagar
+    setInterval(createHeart, 800);
+  </script>
+</body>
+</html>
