@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>TE AMO </title>
+  <title>TE AMO YASMIN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
 
     body {
@@ -19,31 +19,36 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at top, #1a1a1a, #000);
+      background: radial-gradient(circle at top, #111, #000);
       color: #fff;
+      text-align: center;
     }
 
     h1 {
-      font-size: 4rem;
-      font-weight: 700;
-      letter-spacing: 2px;
+      font-size: clamp(3.5rem, 10vw, 7rem); /* 4K + celular */
+      font-weight: 900;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      text-shadow:
+        0 0 20px rgba(255, 0, 100, 0.6),
+        0 0 40px rgba(255, 0, 150, 0.4);
       z-index: 2;
-      animation: pulse 2s infinite;
-      text-shadow: 0 0 20px rgba(255, 0, 100, 0.6);
+      animation: glow 3s ease-in-out infinite;
     }
 
-    @keyframes pulse {
+    @keyframes glow {
       0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.03); }
       100% { transform: scale(1); }
     }
 
     .heart {
       position: absolute;
-      bottom: -20px;
+      bottom: -30px;
       color: rgba(255, 0, 100, 0.8);
-      font-size: 20px;
       animation: floatUp linear infinite;
+      pointer-events: none;
     }
 
     @keyframes floatUp {
@@ -52,7 +57,7 @@
         opacity: 1;
       }
       to {
-        transform: translateY(-110vh) scale(1.5);
+        transform: translateY(-120vh) scale(1.6);
         opacity: 0;
       }
     }
@@ -60,26 +65,24 @@
 </head>
 
 <body>
-  <h1>TE AMO YASMIN ❤️</h1>
+  <h1>TE AMO<br>YASMIN ❤️</h1>
 
   <script>
     function createHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "❤️";
+      heart.className = "heart";
+      heart.textContent = "❤️";
 
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+      heart.style.fontSize = (Math.random() * 24 + 18) + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
 
       document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+      setTimeout(() => heart.remove(), 7000);
     }
 
-    setInterval(createHeart, 300);
+    setInterval(createHeart, 250);
   </script>
 </body>
 </html>
