@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <title>Yasmin ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Uma mensagem feita com amor.">
 
-  <!-- Fonte profissional -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet">
@@ -30,7 +28,7 @@
       text-align: center;
     }
 
-    /* TELA INICIAL */
+    /* BOTÃO INICIAL */
     .start {
       display: flex;
       flex-direction: column;
@@ -56,7 +54,7 @@
       100% { transform: scale(1); }
     }
 
-    /* MENSAGEM */
+    /* MENSAGEM (OCULTA NO INÍCIO) */
     .message {
       display: none;
       z-index: 2;
@@ -64,7 +62,7 @@
     }
 
     h1 {
-      font-size: clamp(2.6rem, 9vw, 5.2rem); /* otimizado p/ celular */
+      font-size: clamp(2.6rem, 9vw, 5.2rem);
       font-weight: 900;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -105,13 +103,13 @@
 
 <body>
 
-  <!-- TELA DE ENTRADA -->
+  <!-- APARECE PRIMEIRO -->
   <div class="start" id="startBtn">
     <div class="heart-btn">❤️</div>
     <span>APERTE AQUI</span>
   </div>
 
-  <!-- MENSAGEM -->
+  <!-- SÓ APARECE DEPOIS DO CLIQUE -->
   <div class="message" id="message">
     <h1>TE AMO<br>YASMIN ❤️</h1>
   </div>
@@ -121,9 +119,10 @@
     const message = document.getElementById("message");
 
     startBtn.addEventListener("click", () => {
-      startBtn.style.display = "none";
+      startBtn.remove();            // remove totalmente
       message.style.display = "block";
-      setInterval(createHeart, 900); // poucos corações
+
+      setInterval(createHeart, 900);
     });
 
     function createHeart() {
