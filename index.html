@@ -28,37 +28,28 @@
       background: black;
     }
 
-    /* FUNDO AURORA BOREAL */
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  inset: -50%;
-  z-index: -2;
-  background:
-    /* faixas verdes */
-    linear-gradient(
-      120deg,
-      rgba(0, 255, 170, 0.35),
-      rgba(0, 200, 120, 0.25),
-      rgba(0, 255, 200, 0.15),
-      transparent 70%
-    ),
-    /* brilho central */
-    radial-gradient(
-      ellipse at center,
-      rgba(0, 255, 180, 0.45),
-      rgba(0, 150, 100, 0.25),
-      transparent 65%
-    );
-  animation: aurora 22s ease-in-out infinite alternate;
-}
+    /* FUNDO AURORA */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -50%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(0, 255, 200, 0.25),
+        rgba(120, 0, 255, 0.25),
+        rgba(255, 0, 120, 0.15),
+        transparent 60%
+      );
+      animation: aurora 18s ease-in-out infinite alternate;
+      z-index: -2;
+    }
 
-body::after {
-  filter: blur(80px);
-  opacity: 0.9;
-  animation-duration: 35s;
-}
+    body::after {
+      animation-duration: 28s;
+      filter: blur(60px);
+      opacity: 0.8;
+    }
 
     @keyframes aurora {
       0% {
