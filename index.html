@@ -2,15 +2,21 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>KK <3</title>
+  <title>Yasmin ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Uma mensagem feita com amor.">
+
+  <!-- Fonte profissional -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet">
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
     }
 
     body {
@@ -29,24 +35,24 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 14px;
       cursor: pointer;
-      animation: pulse 2s infinite;
+      animation: pulse 2.5s infinite;
     }
 
-    .start .heart-btn {
+    .heart-btn {
       font-size: 4rem;
     }
 
     .start span {
-      font-size: 1.2rem;
-      letter-spacing: 0.15em;
-      opacity: 0.9;
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      opacity: 0.65;
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      50% { transform: scale(1.07); }
       100% { transform: scale(1); }
     }
 
@@ -54,23 +60,24 @@
     .message {
       display: none;
       z-index: 2;
+      padding: 0 16px;
     }
 
     h1 {
-      font-size: clamp(3rem, 8vw, 6rem);
+      font-size: clamp(2.6rem, 9vw, 5.2rem); /* otimizado p/ celular */
       font-weight: 900;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 1.1;
       text-shadow:
-        0 0 20px rgba(255, 0, 100, 0.6),
-        0 0 40px rgba(255, 0, 150, 0.4);
+        0 0 18px rgba(255, 0, 120, 0.45),
+        0 0 36px rgba(255, 0, 120, 0.25);
       animation: glow 3s ease-in-out infinite;
     }
 
     @keyframes glow {
       0% { transform: scale(1); }
-      50% { transform: scale(1.02); }
+      50% { transform: scale(1.015); }
       100% { transform: scale(1); }
     }
 
@@ -78,7 +85,7 @@
     .heart {
       position: absolute;
       bottom: -40px;
-      color: rgba(255, 0, 120, 0.85);
+      color: rgba(255, 0, 120, 0.75);
       animation: floatUp linear infinite;
       pointer-events: none;
     }
@@ -98,10 +105,10 @@
 
 <body>
 
-  <!-- TELA DE APERTAR -->
+  <!-- TELA DE ENTRADA -->
   <div class="start" id="startBtn">
     <div class="heart-btn">❤️</div>
-    <span>APERTA AQUI</span>
+    <span>APERTE AQUI</span>
   </div>
 
   <!-- MENSAGEM -->
@@ -116,9 +123,7 @@
     startBtn.addEventListener("click", () => {
       startBtn.style.display = "none";
       message.style.display = "block";
-
-      // começa os corações
-      setInterval(createHeart, 800);
+      setInterval(createHeart, 900); // poucos corações
     });
 
     function createHeart() {
@@ -127,7 +132,7 @@
       heart.textContent = "❤️";
 
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (Math.random() * 18 + 14) + "px";
+      heart.style.fontSize = (Math.random() * 14 + 14) + "px";
       heart.style.animationDuration = (Math.random() * 4 + 6) + "s";
 
       document.body.appendChild(heart);
