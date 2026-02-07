@@ -7,152 +7,111 @@
 
 <style>
 :root {
-  --bg: #0f1220;
-  --card: #171a2e;
-  --text: #e9ecff;
-  --muted: #9aa1ff;
-  --accent: #6c7bff;
+  --bg:#0f1220;
+  --card:#171a2e;
+  --text:#e9ecff;
+  --muted:#9aa1ff;
+  --accent:#6c7bff;
 }
 
-* {
-  box-sizing: border-box;
-  font-family: system-ui, sans-serif;
-}
+* { box-sizing:border-box; font-family:system-ui; }
 
 body {
-  margin: 0;
-  background: linear-gradient(120deg, #0f1220, #0b0e1a);
-  color: var(--text);
+  margin:0;
+  background:linear-gradient(120deg,#0f1220,#0b0e1a);
+  color:var(--text);
 }
 
-.wrap {
-  max-width: 96vw;
-  margin: auto;
-  padding: 16px;
-}
+.wrap { max-width:96vw; margin:auto; padding:16px; }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-/* ===== LAYOUT PRINCIPAL ===== */
-main.wrap {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr; /* notas maiores */
-  gap: 24px;
+/* ===== ABAS ===== */
+.tabs {
+  display:flex;
+  gap:8px;
+  margin:16px 0;
 }
 
-/* ===== NOTAS SALVAS (ESQUERDA) ===== */
+.tabs button {
+  padding:8px 14px;
+  border-radius:12px;
+  border:1px solid #232862;
+  background:var(--card);
+  color:var(--text);
+  cursor:pointer;
+}
+
+.tabs button.active {
+  background:linear-gradient(135deg,var(--accent),#8b95ff);
+  color:#0b0e1a;
+  border:none;
+}
+
+/* ===== SEÇÕES ===== */
+.section { display:none; }
+.section.active { display:block; }
+
+/* ===== NOTAS ===== */
 #notes {
-  display: grid;
-  gap: 20px;
-  max-height: 80vh;
-  overflow-y: auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
+  gap:20px;
 }
 
-/* BASE */
 .note {
-  background: var(--card);
-  border: 1px solid #232862;
-  border-radius: 20px;
-  transition: 0.2s;
+  background:var(--card);
+  border:1px solid #232862;
+  border-radius:20px;
+  padding:26px;
 }
 
-/* NOTAS ANTIGAS (MAIORES) */
-.note.old {
-  padding: 26px;
+.note h3 { margin:0 0 6px; font-size:1.2rem; }
+.note p { margin:0; line-height:1.6; }
+
+.note .actions {
+  display:flex;
+  justify-content:flex-end;
+  margin-top:10px;
+  gap:8px;
 }
 
-.note.old h3 {
-  font-size: 1.2rem;
+/* ===== EDITOR ===== */
+.editor {
+  max-width:900px;
+  margin:auto;
 }
 
-.note.old p {
-  font-size: 1.05rem;
-  line-height: 1.65;
-}
-
-/* NOTAS NOVAS (MENORES) */
-.note.new {
-  padding: 14px;
-  opacity: 0.85;
-}
-
-.note.new h3 {
-  font-size: 0.95rem;
-}
-
-.note.new p {
-  font-size: 0.85rem;
-}
-
-.note p {
-  white-space: pre-wrap;
-  color: #d6dbff;
-}
-
-.note small {
-  color: var(--muted);
-}
-
-.note:hover {
-  transform: scale(1.02);
-  border-color: var(--accent);
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-button {
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid #232862;
-  border-radius: 10px;
-  padding: 6px 12px;
-  cursor: pointer;
-}
-
-button.primary {
-  background: linear-gradient(135deg, var(--accent), #8b95ff);
-  border: none;
-  color: #0b0e1a;
-}
-
-/* ===== EDITOR (DIREITA) ===== */
 .toolbar {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 10px;
-  margin-bottom: 10px;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:10px;
+  margin-bottom:10px;
 }
 
-input, textarea {
-  width: 100%;
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid #232862;
-  border-radius: 12px;
-  padding: 10px;
+input, textarea, button {
+  background:var(--card);
+  color:var(--text);
+  border:1px solid #232862;
+  border-radius:12px;
+  padding:10px;
 }
 
 textarea {
-  min-height: 380px; /* menor que as notas */
-  font-size: 1rem;
-  line-height: 1.6;
-  resize: vertical;
+  min-height:480px;
+  font-size:1rem;
+  line-height:1.6;
+  resize:vertical;
 }
 
-/* MOBILE */
-@media (max-width: 900px) {
-  main.wrap {
-    grid-template-columns: 1fr;
-  }
+button.primary {
+  background:linear-gradient(135deg,var(--accent),#8b95ff);
+  color:#0b0e1a;
+  border:none;
 }
 </style>
 </head>
@@ -160,32 +119,46 @@ textarea {
 <body>
 
 <header class="wrap">
-  <h2>📝Notas</h2>
-  <small>salvo no navegador</small>
+  <h2>📝 Minhas Notas</h2>
+  <small>localStorage</small>
 </header>
 
-<main class="wrap">
-  <!-- NOTAS SALVAS -->
-  <section id="notes"></section>
+<div class="wrap tabs">
+  <button class="active" onclick="openTab('view')">📚 Notas</button>
+  <button onclick="openTab('edit')">✏️ Editar</button>
+</div>
 
-  <!-- EDITOR -->
-  <section>
+<!-- ABA NOTAS -->
+<section id="view" class="wrap section active">
+  <div id="notes"></div>
+</section>
+
+<!-- ABA EDITOR -->
+<section id="edit" class="wrap section">
+  <div class="editor">
     <div class="toolbar">
       <input id="title" placeholder="Título">
       <button class="primary" onclick="save()">Salvar</button>
       <button onclick="clearAll()">Limpar</button>
     </div>
     <textarea id="content" placeholder="Escreva sua nota..."></textarea>
-  </section>
-</main>
+  </div>
+</section>
 
 <script>
-const KEY = "notas_v1"; // NÃO muda isso
+const KEY = "notas_v1";
 let editingId = null;
 
 const notesEl = document.getElementById("notes");
 const titleEl = document.getElementById("title");
 const contentEl = document.getElementById("content");
+
+function openTab(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  event.target.classList.add("active");
+}
 
 function getNotes() {
   return JSON.parse(localStorage.getItem(KEY) || "[]");
@@ -209,16 +182,13 @@ function save() {
     n.content = content;
     editingId = null;
   } else {
-    notes.unshift({
-      id: Date.now(),
-      title: title || "Sem título",
-      content
-    });
+    notes.unshift({ id: Date.now(), title: title || "Sem título", content });
   }
 
   setNotes(notes);
   titleEl.value = "";
   contentEl.value = "";
+  openTab('view');
 }
 
 function edit(id) {
@@ -226,6 +196,7 @@ function edit(id) {
   titleEl.value = n.title;
   contentEl.value = n.content;
   editingId = id;
+  openTab('edit');
 }
 
 function del(id) {
@@ -238,9 +209,8 @@ function clearAll() {
 
 function render() {
   const notes = getNotes();
-
-  notesEl.innerHTML = notes.map((n, i) => `
-    <article class="note ${i < 3 ? 'new' : 'old'}">
+  notesEl.innerHTML = notes.map(n => `
+    <article class="note">
       <h3>${n.title}</h3>
       <p>${n.content.replace(/</g,"&lt;")}</p>
       <div class="actions">
