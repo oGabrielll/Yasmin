@@ -22,7 +22,11 @@ body {
   color:var(--text);
 }
 
-.wrap { max-width:96vw; margin:auto; padding:16px; }
+.wrap {
+  max-width:1100px;   /* largura grande */
+  margin:auto;
+  padding:16px;
+}
 
 header {
   display:flex;
@@ -33,13 +37,15 @@ header {
 /* ===== ABAS ===== */
 .tabs {
   display:flex;
-  gap:8px;
-  margin:16px 0;
+  gap:10px;
+  margin:16px auto;
+  max-width:1100px;
 }
 
 .tabs button {
-  padding:8px 14px;
-  border-radius:12px;
+  padding:10px 18px;
+  font-size:1rem;
+  border-radius:14px;
   border:1px solid #232862;
   background:var(--card);
   color:var(--text);
@@ -56,28 +62,52 @@ header {
 .section { display:none; }
 .section.active { display:block; }
 
-/* ===== NOTAS ===== */
+/* ===== NOTAS GRANDES ===== */
 #notes {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-  gap:20px;
+  display:flex;
+  flex-direction:column;
+  gap:26px;
 }
 
 .note {
   background:var(--card);
   border:1px solid #232862;
-  border-radius:20px;
-  padding:26px;
+  border-radius:26px;
+  padding:32px;
 }
 
-.note h3 { margin:0 0 6px; font-size:1.2rem; }
-.note p { margin:0; line-height:1.6; }
+.note h3 {
+  margin:0 0 10px;
+  font-size:1.4rem;
+}
 
-.note .actions {
+.note p {
+  margin:0;
+  font-size:1.1rem;
+  line-height:1.75;
+  color:#e0e4ff;
+}
+
+.actions {
   display:flex;
   justify-content:flex-end;
-  margin-top:10px;
-  gap:8px;
+  gap:10px;
+  margin-top:16px;
+}
+
+button {
+  background:var(--card);
+  color:var(--text);
+  border:1px solid #232862;
+  border-radius:12px;
+  padding:8px 14px;
+  cursor:pointer;
+}
+
+button.primary {
+  background:linear-gradient(135deg,var(--accent),#8b95ff);
+  border:none;
+  color:#0b0e1a;
 }
 
 /* ===== EDITOR ===== */
@@ -89,29 +119,24 @@ header {
 .toolbar {
   display:grid;
   grid-template-columns:1fr auto auto;
-  gap:10px;
-  margin-bottom:10px;
+  gap:12px;
+  margin-bottom:12px;
 }
 
-input, textarea, button {
+input, textarea {
+  width:100%;
   background:var(--card);
   color:var(--text);
   border:1px solid #232862;
-  border-radius:12px;
-  padding:10px;
+  border-radius:14px;
+  padding:12px;
+  font-size:1rem;
 }
 
 textarea {
-  min-height:480px;
-  font-size:1rem;
+  min-height:500px;
   line-height:1.6;
   resize:vertical;
-}
-
-button.primary {
-  background:linear-gradient(135deg,var(--accent),#8b95ff);
-  color:#0b0e1a;
-  border:none;
 }
 </style>
 </head>
@@ -120,12 +145,12 @@ button.primary {
 
 <header class="wrap">
   <h2>📝 Minhas Notas</h2>
-  <small>localStorage</small>
+  <small>salvo no navegador</small>
 </header>
 
-<div class="wrap tabs">
-  <button class="active" onclick="openTab('view')">📚 Notas</button>
-  <button onclick="openTab('edit')">✏️ Editar</button>
+<div class="tabs">
+  <button class="active" onclick="openTab('view', this)">📚 Notas</button>
+  <button onclick="openTab('edit', this)">✏️ Editar</button>
 </div>
 
 <!-- ABA NOTAS -->
@@ -153,11 +178,11 @@ const notesEl = document.getElementById("notes");
 const titleEl = document.getElementById("title");
 const contentEl = document.getElementById("content");
 
-function openTab(id) {
+function openTab(id, btn) {
   document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
   document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
   document.getElementById(id).classList.add("active");
-  event.target.classList.add("active");
+  btn.classList.add("active");
 }
 
 function getNotes() {
@@ -188,7 +213,7 @@ function save() {
   setNotes(notes);
   titleEl.value = "";
   contentEl.value = "";
-  openTab('view');
+  openTab('view', document.querySelector('.tabs button'));
 }
 
 function edit(id) {
@@ -196,7 +221,7 @@ function edit(id) {
   titleEl.value = n.title;
   contentEl.value = n.content;
   editingId = id;
-  openTab('edit');
+  openTab('edit', document.querySelectorAll('.tabs button')[1]);
 }
 
 function del(id) {
