@@ -32,17 +32,23 @@
       align-items: center;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 1.3rem;
-    }
+    h1 { margin: 0; }
 
     .wrap {
-      max-width: 95vw; /* ocupa quase toda a tela */
+      max-width: 96vw;
       margin: 0 auto;
       padding: 16px;
     }
 
+    /* ===== LAYOUT PRINCIPAL ===== */
+    main.wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr; /* editor | notas */
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ===== EDITOR ===== */
     .toolbar {
       display: grid;
       grid-template-columns: 1fr auto auto;
@@ -59,7 +65,7 @@
     }
 
     textarea {
-      min-height: 420px; /* bem mais alto */
+      min-height: 460px;
       resize: vertical;
       font-size: 1.05rem;
       line-height: 1.6;
@@ -76,31 +82,34 @@
       border: none;
     }
 
-    .grid {
+    /* ===== NOTAS SALVAS (DIREITA) ===== */
+    #notes {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); /* notas mais largas */
+      grid-template-columns: 1fr; /* UMA nota por linha (maior) */
       gap: 16px;
-      margin-top: 16px;
+      max-height: 75vh;
+      overflow-y: auto;
+      padding-right: 6px;
     }
 
     .note {
       background: var(--card);
       border: 1px solid #232862;
-      border-radius: 16px;
-      padding: 14px;
+      border-radius: 18px;
+      padding: 16px;
       display: grid;
-      gap: 8px;
+      gap: 10px;
     }
 
     .note h3 {
       margin: 0;
-      font-size: 1rem;
+      font-size: 1.1rem;
     }
 
     .note p {
       margin: 0;
-      color: #d6dbff;
       font-size: 0.95rem;
+      color: #d6dbff;
       white-space: pre-wrap;
     }
 
@@ -115,7 +124,7 @@
 
     .actions button {
       font-size: 0.8rem;
-      padding: 6px 10px;
+      padding: 6px 12px;
     }
 
     footer {
@@ -124,11 +133,14 @@
       padding: 20px;
     }
 
-    @media (min-width: 900px) {
+    /* ===== MOBILE ===== */
+    @media (max-width: 900px) {
       main.wrap {
-        display: grid;
-        grid-template-columns: 1.3fr 1fr; /* editor maior */
-        gap: 20px;
+        grid-template-columns: 1fr;
+      }
+
+      #notes {
+        max-height: none;
       }
     }
   </style>
@@ -141,7 +153,8 @@
   </header>
 
   <main class="wrap">
-    <section class="editor">
+    <!-- EDITOR -->
+    <section>
       <section class="toolbar">
         <input id="title" placeholder="Título" />
         <button class="primary" onclick="saveNote()">Salvar</button>
@@ -151,7 +164,8 @@
       <textarea id="content" placeholder="Escreva sua nota..."></textarea>
     </section>
 
-    <section id="notes" class="grid"></section>
+    <!-- NOTAS SALVAS -->
+    <section id="notes"></section>
   </main>
 
   <footer>GABRIEL@</footer>
