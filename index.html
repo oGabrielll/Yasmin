@@ -14,10 +14,7 @@
   --accent:#6c7bff;
 }
 
-* {
-  box-sizing:border-box;
-  font-family:system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
+* { box-sizing:border-box; font-family:system-ui; }
 
 body {
   margin:0;
@@ -25,53 +22,79 @@ body {
   color:var(--text);
 }
 
-/* layout levemente à direita */
+/* ⬅️ NÃO CENTRALIZA MAIS */
 .wrap {
-  max-width:1100px;
-  margin-left:80px;
-  margin-right:auto;
-  padding:20px;
+  max-width:1400px;
+  margin-left:24px;
+  margin-right:24px;
+  padding:16px;
 }
 
 header {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:16px;
 }
+
+/* ===== ABAS ===== */
+.tabs {
+  display:flex;
+  gap:10px;
+  margin:16px 24px;
+}
+
+.tabs button {
+  padding:10px 18px;
+  font-size:1rem;
+  border-radius:14px;
+  border:1px solid #232862;
+  background:var(--card);
+  color:var(--text);
+  cursor:pointer;
+}
+
+.tabs button.active {
+  background:linear-gradient(135deg,var(--accent),#8b95ff);
+  color:#0b0e1a;
+  border:none;
+}
+
+/* ===== SEÇÕES ===== */
+.section { display:none; }
+.section.active { display:block; }
 
 /* ===== NOTAS GRANDES ===== */
 #notes {
   display:flex;
   flex-direction:column;
-  gap:28px;
+  gap:26px;
+  max-width:900px; /* notas bem à esquerda */
 }
 
 .note {
   background:var(--card);
   border:1px solid #232862;
   border-radius:26px;
-  padding:34px;
+  padding:32px;
 }
 
 .note h3 {
-  margin:0 0 14px;
-  font-size:1.6rem;
+  margin:0 0 10px;
+  font-size:1.4rem;
 }
 
 .note p {
   margin:0;
-  font-size:1.15rem;
-  line-height:1.8;
-  color:#e4e7ff;
-  white-space:pre-wrap;
+  font-size:1.1rem;
+  line-height:1.75;
+  color:#e0e4ff;
 }
 
 .actions {
   display:flex;
   justify-content:flex-end;
-  gap:12px;
-  margin-top:18px;
+  gap:10px;
+  margin-top:16px;
 }
 
 button {
@@ -79,9 +102,8 @@ button {
   color:var(--text);
   border:1px solid #232862;
   border-radius:12px;
-  padding:10px 16px;
+  padding:8px 14px;
   cursor:pointer;
-  font-size:0.95rem;
 }
 
 button.primary {
@@ -92,14 +114,14 @@ button.primary {
 
 /* ===== EDITOR ===== */
 .editor {
-  max-width:1000px;
+  max-width:900px;
 }
 
 .toolbar {
   display:grid;
   grid-template-columns:1fr auto auto;
-  gap:14px;
-  margin-bottom:14px;
+  gap:12px;
+  margin-bottom:12px;
 }
 
 input, textarea {
@@ -108,19 +130,14 @@ input, textarea {
   color:var(--text);
   border:1px solid #232862;
   border-radius:14px;
-  padding:14px;
-  font-size:1.05rem;
+  padding:12px;
+  font-size:1rem;
 }
 
 textarea {
-  min-height:520px;
-  line-height:1.75;
+  min-height:500px;
+  line-height:1.6;
   resize:vertical;
-}
-
-/* esconder visualização quando estiver editando */
-.hidden {
-  display:none;
 }
 </style>
 </head>
@@ -132,10 +149,21 @@ textarea {
   <small>salvo no navegador</small>
 </header>
 
-<section id="edit" class="wrap">
+<div class="tabs">
+  <button class="active" onclick="openTab('view', this)">📚 Notas</button>
+  <button onclick="openTab('edit', this)">✏️ Editar</button>
+</div>
+
+<!-- ABA NOTAS -->
+<section id="view" class="wrap section active">
+  <div id="notes"></div>
+</section>
+
+<!-- ABA EDITOR -->
+<section id="edit" class="wrap section">
   <div class="editor">
     <div class="toolbar">
-      <input id="title" placeholder="Título da nota">
+      <input id="title" placeholder="Título">
       <button class="primary" onclick="save()">Salvar</button>
       <button onclick="clearAll()">Limpar</button>
     </div>
@@ -143,19 +171,20 @@ textarea {
   </div>
 </section>
 
-<section id="view" class="wrap hidden">
-  <div id="notes"></div>
-</section>
-
 <script>
-const KEY = "notas_v1_backup";
+const KEY = "notas_v1";
 let editingId = null;
 
 const notesEl = document.getElementById("notes");
 const titleEl = document.getElementById("title");
 const contentEl = document.getElementById("content");
-const viewEl = document.getElementById("view");
-const editEl = document.getElementById("edit");
+
+function openTab(id, btn) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+}
 
 function getNotes() {
   return JSON.parse(localStorage.getItem(KEY) || "[]");
@@ -179,16 +208,13 @@ function save() {
     n.content = content;
     editingId = null;
   } else {
-    notes.unshift({
-      id: Date.now(),
-      title: title || "Sem título",
-      content
-    });
+    notes.unshift({ id: Date.now(), title: title || "Sem título", content });
   }
 
   setNotes(notes);
   titleEl.value = "";
   contentEl.value = "";
+  openTab('view', document.querySelector('.tabs button'));
 }
 
 function edit(id) {
@@ -196,8 +222,7 @@ function edit(id) {
   titleEl.value = n.title;
   contentEl.value = n.content;
   editingId = id;
-  viewEl.classList.add("hidden");
-  editEl.classList.remove("hidden");
+  openTab('edit', document.querySelectorAll('.tabs button')[1]);
 }
 
 function del(id) {
@@ -205,10 +230,7 @@ function del(id) {
 }
 
 function clearAll() {
-  if (confirm("Apagar todas as notas?")) {
-    localStorage.removeItem(KEY);
-    render();
-  }
+  if (confirm("Apagar todas as notas?")) setNotes([]);
 }
 
 function render() {
@@ -225,7 +247,6 @@ function render() {
   `).join("");
 }
 
-/* 🔥 abre SEMPRE no editor */
 render();
 </script>
 
