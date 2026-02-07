@@ -25,69 +25,33 @@
       color: var(--text);
     }
 
-    header {
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    h1 { margin: 0; }
-
     .wrap {
       max-width: 96vw;
       margin: 0 auto;
       padding: 16px;
     }
 
+    header {
+      padding: 20px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     /* ===== LAYOUT PRINCIPAL ===== */
     main.wrap {
       display: grid;
-      grid-template-columns: 1.2fr 1fr; /* editor | notas */
+      grid-template-columns: 1fr 1.3fr; /* notas | editor */
       gap: 24px;
       align-items: start;
     }
 
-    /* ===== EDITOR ===== */
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    input, textarea, button {
-      background: var(--card);
-      color: var(--text);
-      border: 1px solid #232862;
-      border-radius: 12px;
-      padding: 10px 12px;
-    }
-
-    textarea {
-      min-height: 460px;
-      resize: vertical;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      width: 100%;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    button.primary {
-      background: linear-gradient(135deg, var(--accent), #8b95ff);
-      color: #0b0e1a;
-      border: none;
-    }
-
-    /* ===== NOTAS SALVAS (DIREITA) ===== */
+    /* ===== NOTAS (ESQUERDA) ===== */
     #notes {
       display: grid;
-      grid-template-columns: 1fr; /* UMA nota por linha (maior) */
+      grid-template-columns: 1fr;
       gap: 16px;
-      max-height: 75vh;
+      max-height: 78vh;
       overflow-y: auto;
       padding-right: 6px;
     }
@@ -120,11 +84,46 @@
     .actions {
       display: flex;
       gap: 8px;
+      justify-content: flex-end;
     }
 
     .actions button {
-      font-size: 0.8rem;
       padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+
+    /* ===== EDITOR (DIREITA) ===== */
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    input, textarea, button {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid #232862;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    textarea {
+      min-height: 500px;
+      resize: vertical;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, var(--accent), #8b95ff);
+      color: #0b0e1a;
+      border: none;
     }
 
     footer {
@@ -153,7 +152,10 @@
   </header>
 
   <main class="wrap">
-    <!-- EDITOR -->
+    <!-- NOTAS SALVAS (ESQUERDA) -->
+    <section id="notes"></section>
+
+    <!-- EDITOR (DIREITA) -->
     <section>
       <section class="toolbar">
         <input id="title" placeholder="Título" />
@@ -163,9 +165,6 @@
 
       <textarea id="content" placeholder="Escreva sua nota..."></textarea>
     </section>
-
-    <!-- NOTAS SALVAS -->
-    <section id="notes"></section>
   </main>
 
   <footer>GABRIEL@</footer>
